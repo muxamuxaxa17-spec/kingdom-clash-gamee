@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Clash</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- Фон с параллакс эффектом -->
+        <div class="parallax-bg">
+            <div class="bg-layer layer-1"></div>
+            <div class="bg-layer layer-2"></div>
+            <div class="bg-layer layer-3"></div>
+        </div>
+
+        <!-- Основной контейнер -->
+        <div class="game-container">
+            <!-- Шапка с ресурсами -->
+            <header class="game-header">
+                <div class="castle-banner">
+                    <div class="castle-icon">🏰</div>
+                    <div class="castle-info">
+                        <h1 id="castle-name">Замок Воителя</h1>
+                        <div class="level-badge">Уровень <span id="castle-level">1</span></div>
+                    </div>
+                </div>
+                
+                <div class="resources-grid">
+                    <div class="resource-card gold">
+                        <div class="resource-icon">💰</div>
+                        <div class="resource-info">
+                            <div class="resource-name">Золото</div>
+                            <div class="resource-amount" id="gold">1,000</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card food">
+                        <div class="resource-icon">🌾</div>
+                        <div class="resource-info">
+                            <div class="resource-name">Еда</div>
+                            <div class="resource-amount" id="food">500</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card wood">
+                        <div class="resource-icon">🪵</div>
+                        <div class="resource-info">
+                            <div class="resource-name">Дерево</div>
+                            <div class="resource-amount" id="wood">300</div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card stone">
+                        <div class="resource-icon">🪨</div>
+                        <div class="resource-info">
+                            <div class="resource-name">Камень</div>
+                            <div class="resource-amount" id="stone">200</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Основной контент -->
+            <main class="game-content">
+                <!-- Быстрые действия -->
+                <section class="quick-actions">
+                    <button class="action-btn collect-btn" onclick="collectResources()">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Собрать ресурсы</span>
+                        <div class="btn-particles"></div>
+                    </button>
+                    
+                    <button class="action-btn army-btn" onclick="trainWarrior()">
+                        <span class="btn-icon">🛡️</span>
+                        <span class="btn-text">Нанять воина</span>
+                        <span class="btn-cost">100 золота</span>
+                    </button>
+                </section>
+
+                <!-- Статистика армии -->
+                <section class="army-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">⚔️</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="warriors">5</div>
+                            <div class="stat-label">Воинов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🏹</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="archers">0</div>
+                            <div class="stat-label">Лучников</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🐎</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="cavalry">0</div>
+                            <div class="stat-label">Всадников</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Улучшения -->
+                <section class="upgrades-section">
+                    <h3>🛠️ Улучшения замка</h3>
+                    <button class="upgrade-btn" onclick="upgradeCastle()">
+                        <div class="upgrade-icon">⬆️</div>
+                        <div class="upgrade-info">
+                            <div class="upgrade-name">Улучшить замок</div>
+                            <div class="upgrade-cost" id="upgrade-cost">500 золота</div>
+                        </div>
+                        <div class="upgrade-badge">+1 уровень</div>
+                    </button>
+                </section>
+
+                <!-- Боевая система -->
+                <section class="battle-section">
+                    <h3>🎯 Боевые действия</h3>
+                    <button class="battle-btn" onclick="attack()">
+                        <span class="battle-icon">⚔️</span>
+                        <span class="battle-text">Атаковать врага!</span>
+                        <div class="sword-effect"></div>
+                    </button>
+                    <div id="battle-result" class="battle-result"></div>
+                </section>
+
+                <!-- Сохранение -->
+                <section class="save-section">
+                    <button class="save-btn" onclick="forceSave()">
+                        <span class="save-icon">💾</span>
+                        Сохранить игру
+                    </button>
+                </section>
+            </main>
+        </div>
+
+        <!-- Анимационные элементы -->
+        <div class="floating-coins"></div>
+        <div class="floating-shields"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
