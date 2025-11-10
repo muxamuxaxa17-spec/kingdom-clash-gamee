@@ -1,14 +1,3 @@
-// Интеграция с Telegram
-let tg = window.Telegram?.WebApp;
-let user = null;
-
-// Инициализация Telegram
-if (tg) {
-    tg.expand();
-    tg.enableClosingConfirmation();
-    user = tg.initDataUnsafe?.user;
-}
-
 // Игровые данные
 let gameState = {
     gold: 1000,
@@ -19,16 +8,32 @@ let gameState = {
     warriors: 5
 };
 
+// Загружаем прогресс при запуске
+function loadProgress() {
+    const saved = localStorage.getItem('kingdomClashSave');
+    if (saved) {
+        gameState = JSON.parse(saved);
+        console.log('Прогресс загружен!');
+    }
+    updateDisplay();
+}
+
+// Сохраняем прогресс
+function saveProgress() {
+    localStorage.setItem('kingdomClashSave', JSON.stringify(gameState));
+    console.log('Прогресс сохранен!');
+}
+
 // Обновляем отображение
 function updateDisplay() {
     document.getElementById('gold').textContent = gameState.gold;
     document.getElementById('food').textContent = gameState.food;
     document.getElementById('wood').textContent = gameState.wood;
     document.getElementById('stone').textContent = gameState.stone;
-    document.getElementById('level').textContent = gameState.castleLevel;
+    document.getElementById('castle-level').textContent = gameState.castleLevel;
     document.getElementById('warriors').textContent = gameState.warriors;
     
-    // Сохраняем прогресс
+    // Сохраняем после каждого изменения
     saveProgress();
 }
 
@@ -100,40 +105,8 @@ function showMessage(text, color = 'blue') {
     }, 3000);
 }
 
-// Сохранение прогресса
-function saveProgress() {
-    if (tg) {
-        const progress = JSON.stringify(gameState);
-        tg.CloudStorage.setItem('gameProgress', progress);
-    } else {
-        // Локальное сохранение для теста
-        localStorage.setItem('kingdomClashProgress', JSON.stringify(gameState));
-    }
-}
-
-// Загрузка прогресса
-function loadProgress() {
-    if (tg) {
-        tg.CloudStorage.getItem('gameProgress', (err, data) => {
-            if (data) {
-                gameState = JSON.parse(data);
-            }
-            updateDisplay();
-        });
-    } else {
-        // Локальная загрузка для теста
-        const saved = localStorage.getItem('kingdomClashProgress');
-        if (saved) {
-            gameState = JSON.parse(saved);
-        }
-        updateDisplay();
-    }
-}
-
-// Приветствие пользователя
-if (user) {
-    showMessage(`Привет, ${user.first_name}! Добро пожаловать в Kingdom Clash!`);
-}
-
 // Запускаем игру при загрузке
-loadProgress();
+document.addEventListener('DOMContentLoaded', function() {
+    loadProgress();
+    showMessage('Добро пожаловать в Kingdom Clash!');
+});
